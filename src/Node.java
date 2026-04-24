@@ -1,16 +1,16 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
+import java.util.HashSet;
 
 public class Node{
-    private List<Node> neighbours = new ArrayList<>();
+    private Set<Node> neighbours = new HashSet<>();
     private int type; 
-
+    private int numEdges;
 
     /**
      * displays all connecting nodes
      * @return connecting nodes
      */
-    public List<Node> getNeighbours() {
+    public Set<Node> getNeighbours() {
         return neighbours;
     }
     /**
@@ -20,5 +20,31 @@ public class Node{
     public int getType(){
         return type;
     }
+
+    public int numEdges(){
+        return numEdges;
+    }
+    /**
+     * add a new connection
+     * @param node connecting node
+     */
+    public void addNeighbour(Node node){
+        boolean newToSet = neighbours.add(node);
+        if(newToSet){
+            numEdges += 1;
+        }
+    }
+
+    /**
+     * Remove a connection
+     * @param node connecting node
+     */
+    public void removeNeighbour(Node node){
+        boolean inSet =neighbours.remove(node);
+        if(inSet){
+            numEdges -= 1;
+        }
+    }
+
 
 }
