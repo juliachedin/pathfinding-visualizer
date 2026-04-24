@@ -6,6 +6,14 @@ public class Node{
     private int type; 
     private int numEdges;
 
+
+    /**
+     * Initializes the node with a start type
+     * @param type int represeting state of node
+     */
+    public Node(int type){
+        this.type = type;
+    }
     /**
      * displays all connecting nodes
      * @return connecting nodes
@@ -20,7 +28,10 @@ public class Node{
     public int getType(){
         return type;
     }
-
+    /**
+     * check number of connections
+     * @return number of neighbours
+     */
     public int numEdges(){
         return numEdges;
     }
@@ -45,6 +56,5 @@ public class Node{
             numEdges -= 1;
         }
     }
-
 
 }
