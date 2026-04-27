@@ -49,8 +49,12 @@ public class BFS implements PathfindingAlgorithm{
         return false;
     }
 
+    /**
+     * Checks if the end node has been visited indicating a path
+     * Disclaimer: Only accurate when algorithm is done searching
+     */
     public boolean hasPath(){
-        return true;
+        return visited.contains(endNode);
     }    
 
     /**
