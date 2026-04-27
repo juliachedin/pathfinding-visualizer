@@ -26,7 +26,10 @@ public class BFS implements PathfindingAlgorithm{
     }
 
     public boolean isFinished(){
-        return true;
+        if (queue.isEmpty()){
+            return true;
+        }
+        return false;
     }
 
     public boolean hasPath(){
