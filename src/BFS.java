@@ -16,15 +16,32 @@ public class BFS implements PathfindingAlgorithm{
         queue = new LinkedList<Node>();
     }
 
+    /**
+     * Adds start position and remembers end goal
+     */
     public void initialize(Node start, Node end){
         endNode = end;
         queue.add(start);
     }
 
+    /**
+     * Represents one step of the algorithm
+     * In this case: checks neighbours for a current node
+     * Modifies visited and adds/removes nodes from the queue
+     */
     public void step(){
-
+        Node nodeChecked = queue.remove();
+        for (Node neighbour : nodeChecked.getNeighbours()){
+            if(!visited.contains(neighbour)){
+                visited.add(neighbour);
+                queue.add(neighbour);
+            }
+        }
     }
 
+    /**
+     * Checks if the algorithm is still searching or not
+     */
     public boolean isFinished(){
         if (queue.isEmpty()){
             return true;
@@ -36,6 +53,9 @@ public class BFS implements PathfindingAlgorithm{
         return true;
     }    
 
+    /**
+     * @return a list of visited nodes so far
+     */
     public List<Node> visitedNodes(){
         ArrayList<Node> visitedArray = new ArrayList<>(visited);
         return visitedArray;
