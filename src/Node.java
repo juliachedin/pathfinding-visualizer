@@ -5,15 +5,20 @@ public class Node{
     private Set<Node> neighbours = new HashSet<>();
     private int type; 
     private int numEdges;
+    private int x;       
+    private int y;      
+    private Node parent;  
 
 
     /**
      * Initializes the node with a start type
      * @param type int represeting state of node
      */
-    public Node(int type){
+    public Node(int type, int x, int y){
         this.type = type;
-    }
+        this.x = x;
+        this.y = y;
+}
     /**
      * displays all connecting nodes
      * @return connecting nodes
@@ -56,5 +61,8 @@ public class Node{
             numEdges -= 1;
         }
     }
-
+    public int getX() { return x; }
+    public int getY() { return y; }
+    public Node getParent() { return parent; }
+    public void setParent(Node parent) { this.parent = parent; }
 }
