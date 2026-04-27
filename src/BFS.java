@@ -33,6 +33,7 @@ public class BFS implements PathfindingAlgorithm{
         Node nodeChecked = queue.remove();
         for (Node neighbour : nodeChecked.getNeighbours()){
             if(!visited.contains(neighbour)){
+                neighbour.setParent(nodeChecked);
                 visited.add(neighbour);
                 queue.add(neighbour);
             }
@@ -64,8 +65,19 @@ public class BFS implements PathfindingAlgorithm{
         ArrayList<Node> visitedArray = new ArrayList<>(visited);
         return visitedArray;
     }
-
+    /**
+     * Traces back the path from end to start using parent pointers
+     * @return list of nodes from start to end
+     */
     public List<Node> foundPath(){
+        List<Node> path = new ArrayList<>();
+        Node current = endNode;
 
+         while(current != null){
+             path.add(0, current);
+             current = current.getParent();
+        }
+
+        return path;
     }
 }
