@@ -54,4 +54,33 @@ public class NodeTest{
             assertEquals(i, node.getType());
         }
     }
+
+    @Test
+    public void numEdgesIsZeroForEmptyNode(){
+        Node node = new Node(0, 0, 0);
+        assertEquals(0, node.numEdges());
+    }
+
+    @Test
+    public void numEdgesIncreasesByOneForAddedNeighbour(){
+        Node node = new Node(0, 0, 0);
+        int numNeighbours = 5;
+        for (int i = 0; i < numNeighbours; i++){
+            Node neighbour = new Node(0, 0, 0);
+            node.addNeighbour(neighbour);
+        }
+        assertEquals(numNeighbours, node.numEdges());
+    }
+
+    @Test
+    public void numEdgesDecreasesByOneForRemovedNeigbours(){
+        Node node = new Node(0, 0, 0);
+        int numNeighbours = 5;
+        for (int i = 0; i < numNeighbours; i++){
+            Node neighbour = new Node(0, 0, 0);
+            node.addNeighbour(neighbour);
+            node.removeNeighbour(neighbour);
+        }
+        assertEquals(0, node.numEdges());
+    }
 }
