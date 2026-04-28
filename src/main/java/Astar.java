@@ -16,12 +16,17 @@ public class AStar implements PathfindingAlgorithm {
     public AStar() {
         visited = new HashSet<>();
         gCosts = new HashMap<>();
-        queue = new PriorityQueue<>((a, b) -> {
-            int fCostA = gCosts.getOrDefault(a, Integer.MAX_VALUE) + heuristic(a);
-            int fCostB = gCosts.getOrDefault(b, Integer.MAX_VALUE) + heuristic(b);
-            return fCostA - fCostB;
-        });
-    }   
+        queue = new PriorityQueue<>(this::compareNodes);
+    }
+
+    /**
+     * Compares two nodes based on their fCost (gCost + hCost).
+     */
+    private int compareNodes(Node a, Node b) {
+        int fCostA = gCosts.getOrDefault(a, Integer.MAX_VALUE) + heuristic(a);
+        int fCostB = gCosts.getOrDefault(b, Integer.MAX_VALUE) + heuristic(b);
+        return fCostA - fCostB;
+    }
 
     /**
      * Estimates distance from node to end using Manhattan distance.
