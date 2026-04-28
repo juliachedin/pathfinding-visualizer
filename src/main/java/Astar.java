@@ -44,4 +44,24 @@ public class AStar implements PathfindingAlgorithm {
         gCosts.put(start, 0);
         queue.add(start);
     }
+
+    /**
+     * Represents one step of the A* algorithm.
+     * Checks neighbours of current node and updates their gCosts.
+     */
+    public void step() {
+        Node current = queue.remove();
+        visited.add(current);
+
+        for (Node neighbour : current.getNeighbours()) {
+            if (!visited.contains(neighbour)) {
+                int newGCost = gCosts.getOrDefault(current, Integer.MAX_VALUE) + 1;
+                if (newGCost < gCosts.getOrDefault(neighbour, Integer.MAX_VALUE)) {
+                    gCosts.put(neighbour, newGCost);
+                    neighbour.setParent(current);
+                    queue.add(neighbour);
+                }
+            }
+        }
+    }
 }
