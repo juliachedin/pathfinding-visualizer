@@ -105,4 +105,12 @@ public class NodeTest{
 
         assertEquals(1, node.getNeighbours().size());
     }
+
+    @Test
+    public void getXIsCorrect(){
+        for (int i = 0; i < 5; i++){
+            Node node = new Node(0, i, 0);
+            assertEquals(i, node.getX());
+        }
+    }
 }
