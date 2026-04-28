@@ -121,4 +121,18 @@ public class NodeTest{
             assertEquals(i, node.getY());
         }
     }
+
+    @Test 
+    public void getParentWhenNullIsCorrect(){
+        Node node = new Node(0, 0, 0);
+        assertNull(node.getParent());
+    }
+
+    @Test
+    public void setAndGetParentIsCorrect(){
+        Node node = new Node(0, 0, 0);
+        Node parent = new Node(0, 0, 0);
+        node.setParent(parent);
+        assertEquals(parent, node.getParent());
+    }
 }
