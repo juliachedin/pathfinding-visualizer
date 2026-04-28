@@ -113,4 +113,12 @@ public class NodeTest{
             assertEquals(i, node.getX());
         }
     }
+
+    @Test
+    public void getYIsCorrect(){
+        for (int i = 0; i < 5; i++){
+            Node node = new Node(0, 0, i);
+            assertEquals(i, node.getY());
+        }
+    }
 }
