@@ -19,4 +19,14 @@ public class Dijkstra implements PathfindingAlgorithm {
         queue = new PriorityQueue<>((a, b) -> distances.getOrDefault(a, Integer.MAX_VALUE) - distances.getOrDefault(b, Integer.MAX_VALUE));
     }
 
+    /**
+     * Initializes the algorithm with start and end node.
+     * Sets distance of start node to 0 and adds it to the queue.
+     */
+    public void initialize(Node start, Node end) {
+        endNode = end;
+        distances.put(start, 0);
+        queue.add(start);
+    }
+
 }
