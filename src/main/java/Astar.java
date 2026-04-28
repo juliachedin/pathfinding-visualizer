@@ -34,4 +34,14 @@ public class AStar implements PathfindingAlgorithm {
     private int heuristic(Node node) {
         return Math.abs(node.getX() - endNode.getX()) + Math.abs(node.getY() - endNode.getY());
     }
+
+    /**
+     * Initializes the algorithm with start and end node.
+     * Sets gCost of start node to 0 and adds it to the queue.
+     */
+    public void initialize(Node start, Node end) {
+        endNode = end;
+        gCosts.put(start, 0);
+        queue.add(start);
+    }
 }
