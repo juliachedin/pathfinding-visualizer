@@ -47,5 +47,11 @@ public class NodeTest{
         assertEquals(1, node.getNeighbours().size());
     }
 
-    
+    @Test
+    public void getTypeIsCorrect(){
+        for (int i = 0; i < 5; i++){
+            Node node = new Node(i, 0, 0);
+            assertEquals(i, node.getType());
+        }
+    }
 }
