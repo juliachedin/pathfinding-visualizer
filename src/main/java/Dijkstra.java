@@ -29,4 +29,23 @@ public class Dijkstra implements PathfindingAlgorithm {
         queue.add(start);
     }
 
+    /**
+     * Represents one step of Dijkstra's algorithm.
+     * Checks neighbours of current node and updates their distances.
+     */
+    public void step() {
+        Node current = queue.remove();
+        visited.add(current);
+
+        for (Node neighbour : current.getNeighbours()) {
+            if (!visited.contains(neighbour)) {
+                int newDistance = distances.getOrDefault(current, Integer.MAX_VALUE) + 1;
+                if (newDistance < distances.getOrDefault(neighbour, Integer.MAX_VALUE)) {
+                    distances.put(neighbour, newDistance);
+                    neighbour.setParent(current);
+                    queue.add(neighbour);
+                }
+            }
+        }
+    }
 }
