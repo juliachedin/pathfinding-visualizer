@@ -16,7 +16,14 @@ public class Dijkstra implements PathfindingAlgorithm {
     public Dijkstra() {
         visited = new HashSet<>();
         distances = new HashMap<>();
-        queue = new PriorityQueue<>((a, b) -> distances.getOrDefault(a, Integer.MAX_VALUE) - distances.getOrDefault(b, Integer.MAX_VALUE));
+        queue = new PriorityQueue<>(this::compareNodes);
+    }
+
+    /**
+     * Compares two nodes based on their distance.
+     */
+    private int compareNodes(Node a, Node b) {
+        return distances.getOrDefault(a, Integer.MAX_VALUE) - distances.getOrDefault(b, Integer.MAX_VALUE);
     }
 
     /**
