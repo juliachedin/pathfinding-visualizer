@@ -83,4 +83,26 @@ public class NodeTest{
         }
         assertEquals(0, node.numEdges());
     }
+
+    @Test
+    public void removeExistingNeighbourIsCorrect(){
+        Node node = new Node(0, 0, 0);
+        Node neighbour = new Node(1, 0, 0);
+        node.addNeighbour(neighbour);
+        node.removeNeighbour(neighbour);
+        assertEquals(0, node.getNeighbours().size());
+        assertTrue(!node.getNeighbours().contains(neighbour));
+    }
+
+    @Test
+    public void removeUnexistingNeighbourHasNoEffect(){
+        Node node = new Node(0, 0, 0);
+        Node neighbour = new Node(1, 0, 0);
+        Node otherNode = new Node(2, 0, 0);
+
+        node.addNeighbour(neighbour);
+        node.removeNeighbour(otherNode);
+
+        assertEquals(1, node.getNeighbours().size());
+    }
 }
