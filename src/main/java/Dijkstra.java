@@ -48,4 +48,18 @@ public class Dijkstra implements PathfindingAlgorithm {
             }
         }
     }
+
+    /**
+     * Checks if the algorithm is still searching or not.
+     */
+    public boolean isFinished() {
+        return queue.isEmpty();
+    }
+
+    /**
+     * Checks if the end node has been visited indicating a path exists.
+     */
+    public boolean hasPath() {
+        return visited.contains(endNode);
+    }
 }
