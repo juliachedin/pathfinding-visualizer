@@ -78,4 +78,27 @@ public class AStar implements PathfindingAlgorithm {
     public boolean hasPath() {
         return visited.contains(endNode);
     }
+
+    /**
+     * Returns a list of all visited nodes so far.
+     */
+    public List<Node> visitedNodes() {
+        return new ArrayList<>(visited);
+    }
+
+    /**
+     * Traces back the path from end to start using parent pointers.
+     * @return list of nodes from start to end
+     */
+    public List<Node> foundPath() {
+        List<Node> path = new ArrayList<>();
+        Node current = endNode;
+
+        while (current != null) {
+            path.add(0, current);
+            current = current.getParent();
+        }
+
+        return path;
+    }
 }
