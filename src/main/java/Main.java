@@ -31,6 +31,8 @@ public class Main extends Application{
         for (int i = 0; i < numCellsY; i++){
             for (int j = 0; j < numCellsX; j++){
                 Rectangle rect = new Rectangle(squareSize, squareSize);
+                int xVal = j;
+                int yVal = i;
                 rect.setX(j * squareSize);
                 rect.setY(i * squareSize);
                 
@@ -38,8 +40,15 @@ public class Main extends Application{
                 rect.setStroke(Color.BLACK);
                 
                 rect.setOnMouseClicked(mouseEvent ->{
-
-                    rect.setFill(Color.RED);
+                    Node currentNode = grid.getNode(yVal, xVal);
+                    if (currentNode.getType() == 0){
+                        rect.setFill(Color.RED);
+                        currentNode.setType(1);
+                    } else {
+                        rect.setFill(Color.WHITE);
+                        currentNode.setType(0);
+                    }
+                    
                 });
                 gridUI[i][j] = rect;
 
