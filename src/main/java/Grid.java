@@ -43,7 +43,13 @@ public class Grid{
         return nodes[xIndex][yIndex];
     }
 
+    public int getWidth(){
+        return xSize;
+    }
 
+    public int getHeight(){
+        return ySize;
+    }
 
 
 }
