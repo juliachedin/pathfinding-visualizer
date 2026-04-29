@@ -8,10 +8,10 @@ public class Grid{
         xSize = width;
         ySize = height;
 
-        nodes = new Node[width][height];
+        nodes = new Node[height][width];
         // creates a grid with the specified width and height
-        for (int i = 0; i < width; i++){
-            for (int j = 0; j < height; j++){
+        for (int i = 0; i < height; i++){
+            for (int j = 0; j < width; j++){
                 //default value 0 for type, indicating "free"
                 Node node = new Node(0, i, j);
                 nodes[i][j] = node;
@@ -22,8 +22,8 @@ public class Grid{
      * This method cleans all of the nodes by removing all connections and walls
      */
     public void cleanGrid(){
-        for (int i = 0; i < xSize; i++){
-            for (int j = 0; j < ySize; j++){
+        for (int i = 0; i < ySize; i++){
+            for (int j = 0; j < xSize; j++){
                 //removes the parent 
                 nodes[i][j].setParent(null);
                 //returns to default type of being "free"
@@ -42,7 +42,7 @@ public class Grid{
      * @return node asked for
      */
     public Node getNode(int xIndex, int yIndex){
-        return nodes[xIndex][yIndex];
+        return nodes[yIndex][xIndex];
     }
 
     public int getWidth(){

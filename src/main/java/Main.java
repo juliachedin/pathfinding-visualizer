@@ -5,6 +5,7 @@ import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.scene.shape.Rectangle;
 
@@ -22,34 +23,14 @@ public class Main extends Application{
     private Grid grid;
     private Pane gridPane;
     
-
-    public static void main(String[] args) {
-        launch(args); //set up in the application 
-    }
-
-    //This start function is where UI code is written
-    @Override 
-    public void start(Stage primaryStage) throws Exception{
-        //Terminology: the window is the stage and the content inside is the scene
-        primaryStage.setTitle("Pathfinding Visualizer");
-
-        gridPane = new Pane();
-        grid = new Grid(numCellsX, numCellsY);
-
-        createVisualGrid();
-
-        Scene scene = new Scene(gridPane, width, height);
-        primaryStage.setScene(scene);
-        primaryStage.show();
-    }
     public void createVisualGrid(){
         gridUI = new Rectangle[numCellsX][numCellsY];
 
-        for (int i = 0; i < numCellsX; i++){
-            for (int j = 0; j < numCellsY; j++){
+        for (int i = 0; i < numCellsY; i++){
+            for (int j = 0; j < numCellsX; j++){
                 Rectangle rect = new Rectangle(squareSize, squareSize);
-                rect.setX(i * squareSize);
-                rect.setY(j * squareSize);
+                rect.setX(j * squareSize);
+                rect.setY(i * squareSize);
                 
                 rect.setFill(Color.WHITE);
                 rect.setStroke(Color.BLACK);
@@ -60,5 +41,28 @@ public class Main extends Application{
             }
         }
     }
+    public static void main(String[] args) {
+        launch(args); //set up in the application 
+    }
+
+    //This start function is where UI code is written
+    @Override 
+    public void start(Stage primaryStage) throws Exception{
+        //Terminology: the window is the stage and the content inside is the scene
+        primaryStage.setTitle("Pathfinding Visualizer");
+
+        BorderPane layout = new BorderPane();
+
+        gridPane = new Pane();
+        grid = new Grid(numCellsX, numCellsY);
+
+        createVisualGrid();
+
+        layout.setCenter(gridPane);
+        Scene scene = new Scene(layout, width, height);
+        primaryStage.setScene(scene);
+        primaryStage.show();
+    }
+
 
 }
