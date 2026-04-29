@@ -33,6 +33,10 @@ public class Node{
     public int getType(){
         return type;
     }
+
+    public void setType(int type){
+        this.type = type;
+    }
     /**
      * check number of connections
      * @return number of neighbours
