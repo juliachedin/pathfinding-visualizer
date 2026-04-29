@@ -7,6 +7,8 @@ public class Grid{
     public Grid(int width, int height){
         xSize = width;
         ySize = height;
+
+        nodes = new Node[width][height];
         // creates a grid with the specified width and height
         for (int i = 0; i < width; i++){
             for (int j = 0; j < height; j++){
