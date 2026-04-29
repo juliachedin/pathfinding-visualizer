@@ -8,6 +8,8 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.input.MouseEvent;
+
 
 
 //Must extend application to use JavaFX functionality
@@ -34,7 +36,11 @@ public class Main extends Application{
                 
                 rect.setFill(Color.WHITE);
                 rect.setStroke(Color.BLACK);
+                
+                rect.setOnMouseClicked(mouseEvent ->{
 
+                    rect.setFill(Color.RED);
+                });
                 gridUI[i][j] = rect;
 
                 gridPane.getChildren().add(rect);
