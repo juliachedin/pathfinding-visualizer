@@ -8,7 +8,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.input.MouseEvent;
 
 
 
@@ -30,15 +29,18 @@ public class Main extends Application{
 
         for (int i = 0; i < numCellsY; i++){
             for (int j = 0; j < numCellsX; j++){
+                //create a new rectangle object for each sqare/cell
                 Rectangle rect = new Rectangle(squareSize, squareSize);
                 int xVal = j;
                 int yVal = i;
+                //determines positioning for each square
                 rect.setX(j * squareSize);
                 rect.setY(i * squareSize);
                 
+                //sets default color to white
                 rect.setFill(Color.WHITE);
                 rect.setStroke(Color.BLACK);
-                
+                //for each rectangle, checks if mouse is clicked and removes/adds a wall
                 rect.setOnMouseClicked(mouseEvent ->{
                     Node currentNode = grid.getNode(yVal, xVal);
                     if (currentNode.getType() == 0){
@@ -50,8 +52,9 @@ public class Main extends Application{
                     }
                     
                 });
+                //remember each rect using a 2D array
                 gridUI[i][j] = rect;
-
+                //add rectangle to the Pane
                 gridPane.getChildren().add(rect);
             }
         }
