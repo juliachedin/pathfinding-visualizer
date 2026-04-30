@@ -8,6 +8,9 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.layout.VBox;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 
 
 
@@ -23,6 +26,7 @@ public class Main extends Application{
     private Rectangle [][] gridUI;
     private Grid grid;
     private Pane gridPane;
+    private VBox buttonPane;
     
     public void createVisualGrid(){
         gridUI = new Rectangle[numCellsX][numCellsY];
@@ -59,6 +63,17 @@ public class Main extends Application{
             }
         }
     }
+    
+    public void createButtons(){
+        Button wallButton = new Button("Wall");
+        Button startButton = new Button("Start");
+        Button endButton = new Button("End");
+
+        buttonPane.getChildren().addAll(wallButton, startButton, endButton); 
+        buttonPane.setAlignment(Pos.CENTER);
+        buttonPane.setPadding(new Insets(10));
+    }
+
     public static void main(String[] args) {
         launch(args); //set up in the application 
     }
@@ -73,10 +88,13 @@ public class Main extends Application{
 
         gridPane = new Pane();
         grid = new Grid(numCellsX, numCellsY);
+        buttonPane = new VBox(10);
 
         createVisualGrid();
+        createButtons();
 
         layout.setCenter(gridPane);
+        layout.setLeft(buttonPane);
         Scene scene = new Scene(layout, width, height);
         primaryStage.setScene(scene);
         primaryStage.show();
