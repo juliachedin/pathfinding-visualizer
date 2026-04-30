@@ -29,6 +29,9 @@ public class Main extends Application{
     private VBox buttonPane;
 
     private int editType = 0;
+
+    private Node currentStartPoint = null;
+    private Node currentEndPoint = null;
     
     public void createVisualGrid(){
         gridUI = new Rectangle[numCellsX][numCellsY];
@@ -56,9 +59,21 @@ public class Main extends Application{
                                 break;
                             case 2:
                                 rect.setFill(Color.BLUE);
+                                if (currentStartPoint != null){
+                                    currentStartPoint.setType(0);
+                                    gridUI[currentStartPoint.getY()][currentStartPoint.getX()].setFill(Color.WHITE);
+                                }
+                                currentStartPoint = grid.getNode(yVal, xVal);
+
                                 break;
                             case 3:
                                 rect.setFill(Color.GREEN);
+                                if (currentEndPoint != null){
+                                    currentEndPoint.setType(0);
+                                    gridUI[currentEndPoint.getY()][currentEndPoint.getX()].setFill(Color.WHITE);
+                                }
+
+                                currentEndPoint = grid.getNode(yVal, xVal);
                                 break;
                         }
                         currentNode.setType(editType);
