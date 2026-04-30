@@ -8,6 +8,9 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.layout.VBox;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 
 
 
@@ -23,6 +26,12 @@ public class Main extends Application{
     private Rectangle [][] gridUI;
     private Grid grid;
     private Pane gridPane;
+    private VBox buttonPane;
+
+    private int editType = 0;
+
+    private Node currentStartPoint = null;
+    private Node currentEndPoint = null;
     
     public void createVisualGrid(){
         gridUI = new Rectangle[numCellsX][numCellsY];
@@ -43,10 +52,38 @@ public class Main extends Application{
                 //for each rectangle, checks if mouse is clicked and removes/adds a wall
                 rect.setOnMouseClicked(mouseEvent ->{
                     Node currentNode = grid.getNode(yVal, xVal);
-                    if (currentNode.getType() == 0){
-                        rect.setFill(Color.RED);
-                        currentNode.setType(1);
+                    int typeOfRect = currentNode.getType();
+                    if (typeOfRect == 0){
+                        switch(editType){
+                            case 1:
+                                rect.setFill(Color.RED);
+                                break;
+                            case 2:
+                                rect.setFill(Color.BLUE);
+                                if (currentStartPoint != null){
+                                    currentStartPoint.setType(0);
+                                    gridUI[currentStartPoint.getY()][currentStartPoint.getX()].setFill(Color.WHITE);
+                                }
+                                currentStartPoint = grid.getNode(yVal, xVal);
+
+                                break;
+                            case 3:
+                                rect.setFill(Color.GREEN);
+                                if (currentEndPoint != null){
+                                    currentEndPoint.setType(0);
+                                    gridUI[currentEndPoint.getY()][currentEndPoint.getX()].setFill(Color.WHITE);
+                                }
+
+                                currentEndPoint = grid.getNode(yVal, xVal);
+                                break;
+                        }
+                        currentNode.setType(editType);
                     } else {
+                        if (typeOfRect == 2){
+                            currentStartPoint = null;
+                        } else if (typeOfRect == 3){
+                            currentEndPoint = null;
+                        }
                         rect.setFill(Color.WHITE);
                         currentNode.setType(0);
                     }
@@ -59,6 +96,29 @@ public class Main extends Application{
             }
         }
     }
+    
+    public void createButtons(){
+        Button wallButton = new Button("Wall");
+        Button startButton = new Button("Start");
+        Button endButton = new Button("End");
+
+        wallButton.setOnAction(event -> {
+            editType = 1;
+        });
+        startButton.setOnAction(event -> {
+            editType = 2;
+        });
+        endButton.setOnAction(event -> {
+            editType = 3;
+        });
+
+        buttonPane.getChildren().addAll(wallButton, startButton, endButton); 
+        buttonPane.setAlignment(Pos.CENTER);
+        buttonPane.setPadding(new Insets(10));
+
+        
+    }   
+
     public static void main(String[] args) {
         launch(args); //set up in the application 
     }
@@ -73,10 +133,13 @@ public class Main extends Application{
 
         gridPane = new Pane();
         grid = new Grid(numCellsX, numCellsY);
+        buttonPane = new VBox(10);
 
         createVisualGrid();
+        createButtons();
 
         layout.setCenter(gridPane);
+        layout.setLeft(buttonPane);
         Scene scene = new Scene(layout, width, height);
         primaryStage.setScene(scene);
         primaryStage.show();
