@@ -52,7 +52,8 @@ public class Main extends Application{
                 //for each rectangle, checks if mouse is clicked and removes/adds a wall
                 rect.setOnMouseClicked(mouseEvent ->{
                     Node currentNode = grid.getNode(yVal, xVal);
-                    if (currentNode.getType() == 0){
+                    int typeOfRect = currentNode.getType();
+                    if (typeOfRect == 0){
                         switch(editType){
                             case 1:
                                 rect.setFill(Color.RED);
@@ -78,6 +79,11 @@ public class Main extends Application{
                         }
                         currentNode.setType(editType);
                     } else {
+                        if (typeOfRect == 2){
+                            currentStartPoint = null;
+                        } else if (typeOfRect == 3){
+                            currentEndPoint = null;
+                        }
                         rect.setFill(Color.WHITE);
                         currentNode.setType(0);
                     }
