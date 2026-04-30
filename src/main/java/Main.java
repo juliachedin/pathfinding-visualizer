@@ -27,6 +27,8 @@ public class Main extends Application{
     private Grid grid;
     private Pane gridPane;
     private VBox buttonPane;
+
+    private int editType = 0;
     
     public void createVisualGrid(){
         gridUI = new Rectangle[numCellsX][numCellsY];
@@ -48,8 +50,18 @@ public class Main extends Application{
                 rect.setOnMouseClicked(mouseEvent ->{
                     Node currentNode = grid.getNode(yVal, xVal);
                     if (currentNode.getType() == 0){
-                        rect.setFill(Color.RED);
-                        currentNode.setType(1);
+                        switch(editType){
+                            case 1:
+                                rect.setFill(Color.RED);
+                                break;
+                            case 2:
+                                rect.setFill(Color.BLUE);
+                                break;
+                            case 3:
+                                rect.setFill(Color.GREEN);
+                                break;
+                        }
+                        currentNode.setType(editType);
                     } else {
                         rect.setFill(Color.WHITE);
                         currentNode.setType(0);
@@ -69,10 +81,22 @@ public class Main extends Application{
         Button startButton = new Button("Start");
         Button endButton = new Button("End");
 
+        wallButton.setOnAction(event -> {
+            editType = 1;
+        });
+        startButton.setOnAction(event -> {
+            editType = 2;
+        });
+        endButton.setOnAction(event -> {
+            editType = 3;
+        });
+
         buttonPane.getChildren().addAll(wallButton, startButton, endButton); 
         buttonPane.setAlignment(Pos.CENTER);
         buttonPane.setPadding(new Insets(10));
-    }
+
+        
+    }   
 
     public static void main(String[] args) {
         launch(args); //set up in the application 
