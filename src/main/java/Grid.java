@@ -22,16 +22,15 @@ public class Grid{
      * This method cleans all of the nodes by removing all connections and walls
      */
     public void cleanGrid(){
-        for (int i = 0; i < ySize; i++){
-            for (int j = 0; j < xSize; j++){
-                //removes the parent 
+    for (int i = 0; i < ySize; i++){
+        for (int j = 0; j < xSize; j++){
+            if (nodes[i][j].getType() != 1) {
                 nodes[i][j].setParent(null);
-                //returns to default type of being "free"
                 nodes[i][j].setType(0);
-                //removes all connections
-                for(Node neighbour: nodes[i][j].getNeighbours()){
-                    nodes[i][j].removeNeighbour(neighbour);
-                }
+            } else {
+                nodes[i][j].setParent(null);
+            }
+            nodes[i][j].getNeighbours().clear();
             }
         }
     }

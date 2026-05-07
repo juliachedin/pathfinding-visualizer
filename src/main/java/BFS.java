@@ -21,6 +21,7 @@ public class BFS implements PathfindingAlgorithm{
      */
     public void initialize(Node start, Node end){
         endNode = end;
+        visited.add(start);
         queue.add(start);
     }
 

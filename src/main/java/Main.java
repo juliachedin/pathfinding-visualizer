@@ -101,6 +101,7 @@ public class Main extends Application{
         Button wallButton = new Button("Wall");
         Button startButton = new Button("Start");
         Button endButton = new Button("End");
+        Button runButton = new Button("Run");
 
         wallButton.setOnAction(event -> {
             editType = 1;
@@ -111,8 +112,13 @@ public class Main extends Application{
         endButton.setOnAction(event -> {
             editType = 3;
         });
+        runButton.setOnAction(event -> {
+            if (currentStartPoint != null && currentEndPoint != null) {
+                runAlgorithm();
+            }
+        });
 
-        buttonPane.getChildren().addAll(wallButton, startButton, endButton); 
+        buttonPane.getChildren().addAll(wallButton, startButton, endButton, runButton);
         buttonPane.setAlignment(Pos.CENTER);
         buttonPane.setPadding(new Insets(10));
 
@@ -145,5 +151,61 @@ public class Main extends Application{
         primaryStage.show();
     }
 
+    public void runAlgorithm() {
+    // Clean grid before running to avoid stale neighbours/parents
+    grid.cleanGrid();
 
+    // Re-color walls that were visually reset
+    for (int i = 0; i < numCellsY; i++) {
+        for (int j = 0; j < numCellsX; j++) {
+            Node node = grid.getNode(i, j);
+            if (node.getType() == 1) {
+                gridUI[i][j].setFill(Color.RED);
+            } else {
+                gridUI[i][j].setFill(Color.WHITE);
+            }
+        }
+    }
+
+    // Re-apply start and end types since cleanGrid resets them
+    currentStartPoint.setType(2);
+    currentEndPoint.setType(3);
+
+    // Build the graph - connect all non-wall nodes to their neighbours
+    for (int i = 0; i < numCellsY; i++) {
+        for (int j = 0; j < numCellsX; j++) {
+            Node current = grid.getNode(i, j);
+            if (current.getType() != 1) {
+                if (i > 0 && grid.getNode(i-1, j).getType() != 1) current.addNeighbour(grid.getNode(i-1, j));
+                if (i < numCellsY-1 && grid.getNode(i+1, j).getType() != 1) current.addNeighbour(grid.getNode(i+1, j));
+                if (j > 0 && grid.getNode(i, j-1).getType() != 1) current.addNeighbour(grid.getNode(i, j-1));
+                if (j < numCellsX-1 && grid.getNode(i, j+1).getType() != 1) current.addNeighbour(grid.getNode(i, j+1));
+            }
+        }
+    }
+
+    // Run algorithm
+    PathfindingAlgorithm algorithm = new BFS();
+    algorithm.initialize(currentStartPoint, currentEndPoint);
+
+    while (!algorithm.isFinished()) {
+        algorithm.step();
+    }
+
+    // Color visited nodes yellow
+    for (Node node : algorithm.visitedNodes()) {
+        gridUI[node.getY()][node.getX()].setFill(Color.YELLOW);
+    }
+
+    // Color the path orange
+    if (algorithm.hasPath()) {
+        for (Node node : algorithm.foundPath()) {
+            gridUI[node.getY()][node.getX()].setFill(Color.ORANGE);
+        }
+    }
+
+    // Keep start and end colors
+    gridUI[currentStartPoint.getY()][currentStartPoint.getX()].setFill(Color.BLUE);
+    gridUI[currentEndPoint.getY()][currentEndPoint.getX()].setFill(Color.GREEN);
+    }
 }
