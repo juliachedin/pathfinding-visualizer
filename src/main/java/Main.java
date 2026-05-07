@@ -147,6 +147,21 @@ public class Main extends Application{
         createVisualGrid();
         createButtons();
 
+        // allows dragging to add walls
+        gridPane.setOnMouseDragged(mouseEvent -> {
+            if (editType == 1) {
+                int col = (int)(mouseEvent.getX() / squareSize);
+                int row = (int)(mouseEvent.getY() / squareSize);
+                if (row >= 0 && row < numCellsY && col >= 0 && col < numCellsX) {
+                    Node currentNode = grid.getNode(row, col);
+                    if (currentNode.getType() == 0) {
+                        currentNode.setType(1);
+                        gridUI[row][col].setFill(Color.RED);
+                    }
+                }
+            }
+        });
+
         layout.setCenter(gridPane);
         layout.setLeft(buttonPane);
         Scene scene = new Scene(layout, width, height);
