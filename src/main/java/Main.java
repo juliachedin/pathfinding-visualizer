@@ -11,6 +11,9 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.layout.VBox;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.util.Duration;
 
 
 
@@ -188,24 +191,30 @@ public class Main extends Application{
     PathfindingAlgorithm algorithm = new BFS();
     algorithm.initialize(currentStartPoint, currentEndPoint);
 
-    while (!algorithm.isFinished()) {
-        algorithm.step();
-    }
-
-    // Color visited nodes yellow
-    for (Node node : algorithm.visitedNodes()) {
-        gridUI[node.getY()][node.getX()].setFill(Color.YELLOW);
-    }
-
-    // Color the path orange
-    if (algorithm.hasPath()) {
-        for (Node node : algorithm.foundPath()) {
-            gridUI[node.getY()][node.getX()].setFill(Color.ORANGE);
+    // Replace while-loop with Timeline animation - runs one step at a time with 30ms delay
+    Timeline[] timelineHolder = new Timeline[1];
+    timelineHolder[0] = new Timeline(new KeyFrame(Duration.millis(30), event -> {
+        if (!algorithm.isFinished()) {
+            algorithm.step();
+            for (Node node : algorithm.visitedNodes()) {
+                if (node != currentStartPoint && node != currentEndPoint) {
+                    gridUI[node.getY()][node.getX()].setFill(Color.YELLOW);
+                }
+            }
+        } else {
+            timelineHolder[0].stop();
+            if (algorithm.hasPath()) {
+                for (Node node : algorithm.foundPath()) {
+                    if (node != currentStartPoint && node != currentEndPoint) {
+                        gridUI[node.getY()][node.getX()].setFill(Color.ORANGE);
+                    }
+                }
+            }
+            gridUI[currentStartPoint.getY()][currentStartPoint.getX()].setFill(Color.BLUE);
+            gridUI[currentEndPoint.getY()][currentEndPoint.getX()].setFill(Color.GREEN);
         }
-    }
-
-    // Keep start and end colors
-    gridUI[currentStartPoint.getY()][currentStartPoint.getX()].setFill(Color.BLUE);
-    gridUI[currentEndPoint.getY()][currentEndPoint.getX()].setFill(Color.GREEN);
+    }));
+    timelineHolder[0].setCycleCount(Timeline.INDEFINITE);
+    timelineHolder[0].play();
     }
 }
