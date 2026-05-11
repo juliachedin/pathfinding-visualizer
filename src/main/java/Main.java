@@ -215,7 +215,19 @@ public class Main extends Application{
     }
 
     // Run algorithm
-    PathfindingAlgorithm algorithm = new BFS();
+    PathfindingAlgorithm algorithm;
+    if (selectedAlgorithm.equals("BFS")){
+        algorithm = new BFS();
+    } else if (selectedAlgorithm.equals("Dijkstra")){
+        algorithm = new Dijkstra();
+    } else if (selectedAlgorithm.equals("A*")){
+        algorithm = new Astar();
+    } else {
+        throw new IllegalArgumentException(
+            "unknown algorithm: " + selectedAlgorithm
+        );
+    }
+
     algorithm.initialize(currentStartPoint, currentEndPoint);
 
     // Replace while-loop with Timeline animation - runs one step at a time with 30ms delay
