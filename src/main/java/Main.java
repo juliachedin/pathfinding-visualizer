@@ -151,19 +151,32 @@ public class Main extends Application{
     //This start function is where UI code is written
     @Override 
     public void start(Stage primaryStage) throws Exception{
-        //Terminology: the window is the stage and the content inside is the scene
         primaryStage.setTitle("Pathfinding Visualizer");
 
         BorderPane layout = new BorderPane();
+        layout.setStyle("-fx-background-color: #1e1e2e;");
 
+        // Title
+        javafx.scene.control.Label title = new javafx.scene.control.Label("Pathfinding Visualizer");
+        title.setStyle("-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: white; -fx-padding: 15px;");
+        BorderPane.setAlignment(title, Pos.CENTER);
+        layout.setTop(title);
+
+        // Center the grid
         gridPane = new Pane();
+        gridPane.setMinSize(numCellsX * squareSize, numCellsY * squareSize);
+        gridPane.setMaxSize(numCellsX * squareSize, numCellsY * squareSize);
+        gridPane.setStyle("-fx-background-color: #1e1e2e;");
         grid = new Grid(numCellsX, numCellsY);
         buttonPane = new VBox(10);
+
+        javafx.scene.layout.StackPane centerPane = new javafx.scene.layout.StackPane(gridPane);
+        centerPane.setAlignment(Pos.CENTER);
+        centerPane.setPadding(new Insets(20));
 
         createVisualGrid();
         createButtons();
 
-        // allows dragging to add walls
         gridPane.setOnMouseDragged(mouseEvent -> {
             if (editType == 1) {
                 int col = (int)(mouseEvent.getX() / squareSize);
@@ -178,8 +191,13 @@ public class Main extends Application{
             }
         });
 
-        layout.setCenter(gridPane);
-        layout.setLeft(buttonPane);
+        javafx.scene.layout.HBox bottomPane = new javafx.scene.layout.HBox(10);
+        bottomPane.setAlignment(Pos.CENTER);
+        bottomPane.setPadding(new Insets(10));
+        bottomPane.getChildren().addAll(buttonPane.getChildren());
+
+        layout.setCenter(centerPane);
+        layout.setBottom(bottomPane);
         Scene scene = new Scene(layout, width, height);
         primaryStage.setScene(scene);
         primaryStage.show();
