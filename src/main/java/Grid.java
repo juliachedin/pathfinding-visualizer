@@ -1,3 +1,11 @@
+
+/**
+ * Grid class for keeping a grid where every cell contains a node
+ * The class is mainly for creating a grid of nodes and keeping track
+ * of node positioning
+ * 
+ */
+
 public class Grid{
 
     Node [][] nodes;
