@@ -6,14 +6,14 @@ import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.Set;
 
-public class AStar implements PathfindingAlgorithm {
+public class Astar implements PathfindingAlgorithm {
 
     private Set<Node> visited;
     private PriorityQueue<Node> queue;
     private Map<Node, Integer> gCosts;
     private Node endNode;
 
-    public AStar() {
+    public Astar() {
         visited = new HashSet<>();
         gCosts = new HashMap<>();
         queue = new PriorityQueue<>(this::compareNodes);
