@@ -6,6 +6,14 @@ import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.Set;
 
+/**
+ * This class implements the A* search algorithm by using
+ * connecting nodes in a graph datastructure
+ * 
+ * The algorithm finds its way from a starting node to an ending node
+ * by searching through the neighbours of different nodes
+ */
+
 public class Astar implements PathfindingAlgorithm {
 
     private Set<Node> visited;

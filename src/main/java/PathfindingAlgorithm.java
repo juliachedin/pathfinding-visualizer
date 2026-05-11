@@ -1,5 +1,14 @@
 import java.util.List;
 
+/**
+ * An interface for all search algorithms
+ * The purpose is to force all search algorithms to use similar methods
+ * so they can be used for the same purpose
+ * 
+ * These methods are chosen with the purpose of being used in a pathfinding visualiser
+ */
+
+
 public interface PathfindingAlgorithm {
     /**
      * Initializes the algorithm with a start point and end goal

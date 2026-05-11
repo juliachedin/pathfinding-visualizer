@@ -17,7 +17,11 @@ import javafx.animation.Timeline;
 import javafx.util.Duration;
 import javafx.scene.control.ChoiceBox;
 
-
+/**
+ * Main class for running the visualiser program
+ * This main class includes javafx operations for UI design and events
+ * 
+ */
 
 //Must extend application to use JavaFX functionality
 public class Main extends Application{

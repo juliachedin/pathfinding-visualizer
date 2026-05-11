@@ -1,6 +1,13 @@
 import java.util.Set;
 import java.util.HashSet;
 
+/**
+ * Node class for creating each node in a graph.
+ * The purpose is to record neighbouring nodes and 
+ * specific data for each node 
+ * 
+ */
+
 public class Node{
     private Set<Node> neighbours = new HashSet<>();
     private int type; 

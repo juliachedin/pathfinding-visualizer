@@ -5,6 +5,14 @@ import java.util.List;
 import java.util.Queue;
 import java.util.Set;
 
+/**
+ * This class implements the BFS search algorithm by using
+ * connecting nodes in a graph datastructure
+ * 
+ * The algorithm finds its way from a starting node to an ending node
+ * by searching through the neighbours of different nodes
+ */
+
 public class BFS implements PathfindingAlgorithm{
     
     private Set<Node> visited;
