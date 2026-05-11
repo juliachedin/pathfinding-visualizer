@@ -125,7 +125,7 @@ public class Main extends Application{
             editType = 3;
         });
         runButton.setOnAction(event -> {
-            if (currentStartPoint != null && currentEndPoint != null) {
+            if (currentStartPoint != null && currentEndPoint != null && selectedAlgorithm != null) {
                 runAlgorithm();
             }
         });
@@ -214,7 +214,7 @@ public class Main extends Application{
         }
     }
 
-    // Run algorithm
+    // Run algorithm, check which algorithm has been selected
     PathfindingAlgorithm algorithm;
     if (selectedAlgorithm.equals("BFS")){
         algorithm = new BFS();
