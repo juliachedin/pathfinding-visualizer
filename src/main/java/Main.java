@@ -1,5 +1,6 @@
 import javafx.scene.paint.Color;
 import javafx.application.Application;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -14,6 +15,7 @@ import javafx.geometry.Pos;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
+import javafx.scene.control.ChoiceBox;
 
 
 
@@ -35,6 +37,8 @@ public class Main extends Application{
 
     private Node currentStartPoint = null;
     private Node currentEndPoint = null;
+
+    private String selectedAlgorithm = null;
     
     public void createVisualGrid(){
         gridUI = new Rectangle[numCellsX][numCellsY];
@@ -105,6 +109,11 @@ public class Main extends Application{
         Button startButton = new Button("Start");
         Button endButton = new Button("End");
         Button runButton = new Button("Run");
+        ChoiceBox<String> algorithmButton = new ChoiceBox<String>();
+
+        //use observable list to add items to the choice box
+        ObservableList<String> algorithms = algorithmButton.getItems();
+        algorithms.addAll("BFS", "Dijkstra", "A*");
 
         wallButton.setOnAction(event -> {
             editType = 1;
@@ -120,8 +129,11 @@ public class Main extends Application{
                 runAlgorithm();
             }
         });
+        algorithmButton.setOnAction(event -> {
+            selectedAlgorithm = algorithmButton.getValue();
+        });
 
-        buttonPane.getChildren().addAll(wallButton, startButton, endButton, runButton);
+        buttonPane.getChildren().addAll(wallButton, startButton, endButton, runButton, algorithmButton);
         buttonPane.setAlignment(Pos.CENTER);
         buttonPane.setPadding(new Insets(10));
 
