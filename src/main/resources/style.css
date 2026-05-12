@@ -37,3 +37,16 @@
     -fx-cursor: hand;
 }
 
+.context-menu {
+    -fx-background-color: #f9cdea;
+    -fx-background-radius: 8;
+}
+
+.menu-item {
+    -fx-cursor: hand;
+}
+
+.menu-item:focused {
+    -fx-background-color: #f69bd8;
+
+}
