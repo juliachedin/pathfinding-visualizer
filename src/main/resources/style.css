@@ -1,0 +1,52 @@
+
+.button{
+    -fx-font-size: 18px;
+    -fx-border-radius: 4;
+    -fx-background-radius: 10;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 8, 0.2, 0, 2);
+    -fx-cursor: hand;
+    -fx-font-family: "Copperplate", Fantasy;
+    -fx-padding: 8px;
+    -fx-background-color: linear-gradient(to bottom, #ffe4f0, #f6a4c9);
+
+}
+
+.button:hover {
+    -fx-background-color: #ffb6d7;
+
+}
+
+.button:disabled {
+    -fx-background-color: #b4b4b4;
+}
+
+.button:selected {
+    -fx-background-color: linear-gradient(to bottom, #feb4d6, #fe6eaf);
+
+}
+
+.choice-box {
+    -fx-background-color: linear-gradient(to bottom, #ed559a, #f6a4c9);
+    -fx-background-radius: 10;
+    -fx-border-radius: 4;
+    -fx-font-family: "Copperplate", Fantasy;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 8, 0.2, 0, 2);
+    -fx-font-size: 16px;
+    -fx-pref-width: 100px;
+    -fx-pref-height: 30px;
+    -fx-cursor: hand;
+}
+
+.context-menu {
+    -fx-background-color: #f9cdea;
+    -fx-background-radius: 8;
+}
+
+.menu-item {
+    -fx-cursor: hand;
+}
+
+.menu-item:focused {
+    -fx-background-color: #f69bd8;
+
+}

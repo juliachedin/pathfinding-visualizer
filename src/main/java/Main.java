@@ -4,7 +4,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
@@ -16,6 +16,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ToggleGroup;
 
 /**
  * Main class for running the visualiser program
@@ -46,6 +47,8 @@ public class Main extends Application{
 
     //to check state of visualizer and if it is running a search
     private boolean isRunning = false;
+
+    private ToggleButton runButton;
     
     public void createVisualGrid(){
         gridUI = new Rectangle[numCellsX][numCellsY];
@@ -104,7 +107,7 @@ public class Main extends Application{
                         rect.setFill(Color.web("#ffe4f0"));
                         currentNode.setType(0);
                     }
-                    
+                    updateRunButton();
                 });
                 //remember each rect using a 2D array
                 gridUI[i][j] = rect;
@@ -115,15 +118,29 @@ public class Main extends Application{
     }
     
     public void createButtons(){
-        Button wallButton = new Button("Wall");
-        Button startButton = new Button("Start");
-        Button endButton = new Button("End");
-        Button runButton = new Button("Run");
+
+        ToggleButton wallButton = new ToggleButton("Wall");
+        ToggleButton startButton = new ToggleButton("Start");
+        ToggleButton endButton = new ToggleButton("End");
+        runButton = new ToggleButton("Run");
         ChoiceBox<String> algorithmButton = new ChoiceBox<String>();
 
         //use observable list to add items to the choice box
         ObservableList<String> algorithms = algorithmButton.getItems();
         algorithms.addAll("BFS", "Dijkstra", "A*");
+
+        //create toggle group and add all buttons for this. Creates visual effect of one being chosen at a time
+        ToggleGroup buttonGroup = new ToggleGroup();
+        wallButton.setToggleGroup(buttonGroup);
+        startButton.setToggleGroup(buttonGroup);
+        endButton.setToggleGroup(buttonGroup);
+        runButton.setToggleGroup(buttonGroup);
+
+        //add buttons to CSS style class
+        wallButton.getStyleClass().add("button");
+        startButton.getStyleClass().add("button");
+        endButton.getStyleClass().add("button");
+        runButton.getStyleClass().add("button");
 
         wallButton.setOnAction(event -> {
             editType = 1;
@@ -135,16 +152,19 @@ public class Main extends Application{
             editType = 3;
         });
         runButton.setOnAction(event -> {
-            //to be allowed to run start/end points must exist, an algorithm has to be chosen and state of visualizer not running
-            if (currentStartPoint != null && currentEndPoint != null && selectedAlgorithm != null && !isRunning) {
-                runAlgorithm();
-                //change state to active
-                isRunning = true;
-            }
+            runAlgorithm();
+            //change state to active
+            isRunning = true;
+            updateRunButton();
         });
+
+        updateRunButton();
+        
         algorithmButton.setOnAction(event -> {
             selectedAlgorithm = algorithmButton.getValue();
+            updateRunButton();
         });
+
 
         buttonPane.getChildren().addAll(wallButton, startButton, endButton, runButton, algorithmButton);
         buttonPane.setAlignment(Pos.CENTER);
@@ -152,6 +172,20 @@ public class Main extends Application{
 
         
     }   
+
+    /**
+     * Updates if the runbutton is still disabled or not based on conditions
+     * @param runButton button to be disabled
+     */
+    public void updateRunButton(){
+        //to be allowed to run start/end points must exist, an algorithm has to be chosen and state of visualizer not running
+        if (currentStartPoint != null && currentEndPoint != null && selectedAlgorithm != null && !isRunning) {
+            runButton.setDisable(false);
+        } else {
+            runButton.setDisable(true);
+        }
+
+    }
 
     public static void main(String[] args) {
         launch(args); //set up in the application 
@@ -208,6 +242,7 @@ public class Main extends Application{
         layout.setCenter(centerPane);
         layout.setBottom(bottomPane);
         Scene scene = new Scene(layout, width, height);
+        scene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
         primaryStage.setScene(scene);
         primaryStage.show();
     }
