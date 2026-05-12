@@ -61,31 +61,34 @@ public class Main extends Application{
                 rect.setY(i * squareSize);
                 
                 //sets default color to white
-                rect.setFill(Color.WHITE);
-                rect.setStroke(Color.BLACK);
+                rect.setFill(Color.web("#ffe4f0"));
+                rect.setStroke(Color.web("#ffb6d9"));
                 //for each rectangle, checks if mouse is clicked and removes/adds a wall
                 rect.setOnMouseClicked(mouseEvent ->{
                     Node currentNode = grid.getNode(yVal, xVal);
                     int typeOfRect = currentNode.getType();
                     if (typeOfRect == 0){
                         switch(editType){
+                            //wall
                             case 1:
-                                rect.setFill(Color.RED);
+                                rect.setFill(Color.web("#c2185b"));
                                 break;
+                            //start point
                             case 2:
-                                rect.setFill(Color.BLUE);
+                                rect.setFill(Color.web("#3b95db"));
                                 if (currentStartPoint != null){
                                     currentStartPoint.setType(0);
-                                    gridUI[currentStartPoint.getY()][currentStartPoint.getX()].setFill(Color.WHITE);
+                                    gridUI[currentStartPoint.getY()][currentStartPoint.getX()].setFill(Color.web("#ffe4f0"));
                                 }
                                 currentStartPoint = grid.getNode(yVal, xVal);
 
                                 break;
+                            //end point
                             case 3:
-                                rect.setFill(Color.GREEN);
+                                rect.setFill(Color.web("#0652bc"));
                                 if (currentEndPoint != null){
                                     currentEndPoint.setType(0);
-                                    gridUI[currentEndPoint.getY()][currentEndPoint.getX()].setFill(Color.WHITE);
+                                    gridUI[currentEndPoint.getY()][currentEndPoint.getX()].setFill(Color.web("#ffe4f0"));
                                 }
 
                                 currentEndPoint = grid.getNode(yVal, xVal);
@@ -98,7 +101,7 @@ public class Main extends Application{
                         } else if (typeOfRect == 3){
                             currentEndPoint = null;
                         }
-                        rect.setFill(Color.WHITE);
+                        rect.setFill(Color.web("#ffe4f0"));
                         currentNode.setType(0);
                     }
                     
@@ -157,19 +160,32 @@ public class Main extends Application{
     //This start function is where UI code is written
     @Override 
     public void start(Stage primaryStage) throws Exception{
-        //Terminology: the window is the stage and the content inside is the scene
         primaryStage.setTitle("Pathfinding Visualizer");
 
         BorderPane layout = new BorderPane();
+        layout.setStyle("-fx-background-color: #fff0f7;");
 
+        // Title
+        javafx.scene.control.Label title = new javafx.scene.control.Label("Pathfinding Visualizer");
+        title.setStyle("-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #090957; -fx-padding: 15px;");
+        BorderPane.setAlignment(title, Pos.CENTER);
+        layout.setTop(title);
+
+        // Center the grid
         gridPane = new Pane();
+        gridPane.setMinSize(numCellsX * squareSize, numCellsY * squareSize);
+        gridPane.setMaxSize(numCellsX * squareSize, numCellsY * squareSize);
+        gridPane.setStyle("-fx-background-color: #fff0f7;");
         grid = new Grid(numCellsX, numCellsY);
         buttonPane = new VBox(10);
+
+        javafx.scene.layout.StackPane centerPane = new javafx.scene.layout.StackPane(gridPane);
+        centerPane.setAlignment(Pos.CENTER);
+        centerPane.setPadding(new Insets(20));
 
         createVisualGrid();
         createButtons();
 
-        // allows dragging to add walls
         gridPane.setOnMouseDragged(mouseEvent -> {
             if (editType == 1) {
                 int col = (int)(mouseEvent.getX() / squareSize);
@@ -178,14 +194,19 @@ public class Main extends Application{
                     Node currentNode = grid.getNode(row, col);
                     if (currentNode.getType() == 0) {
                         currentNode.setType(1);
-                        gridUI[row][col].setFill(Color.RED);
+                        gridUI[row][col].setFill(Color.web("#c2185b"));
                     }
                 }
             }
         });
 
-        layout.setCenter(gridPane);
-        layout.setLeft(buttonPane);
+        javafx.scene.layout.HBox bottomPane = new javafx.scene.layout.HBox(10);
+        bottomPane.setAlignment(Pos.CENTER);
+        bottomPane.setPadding(new Insets(10));
+        bottomPane.getChildren().addAll(buttonPane.getChildren());
+
+        layout.setCenter(centerPane);
+        layout.setBottom(bottomPane);
         Scene scene = new Scene(layout, width, height);
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -199,10 +220,15 @@ public class Main extends Application{
     for (int i = 0; i < numCellsY; i++) {
         for (int j = 0; j < numCellsX; j++) {
             Node node = grid.getNode(i, j);
-            if (node.getType() == 1) {
-                gridUI[i][j].setFill(Color.RED);
+            int cellType = node.getType();
+            if (cellType == 1) {
+                gridUI[i][j].setFill(Color.web("#c2185b"));
+            } else if (cellType == 2) {
+                gridUI[i][j].setFill(Color.web("#3b95db"));
+            } else if (cellType == 3) {
+                gridUI[i][j].setFill(Color.web("#0652bc"));
             } else {
-                gridUI[i][j].setFill(Color.WHITE);
+                gridUI[i][j].setFill(Color.web("#ffe4f0"));
             }
         }
     }
@@ -243,11 +269,13 @@ public class Main extends Application{
     // Replace while-loop with Timeline animation - runs one step at a time with 30ms delay
     Timeline[] timelineHolder = new Timeline[1];
     timelineHolder[0] = new Timeline(new KeyFrame(Duration.millis(30), event -> {
+        gridUI[currentStartPoint.getY()][currentStartPoint.getX()].setFill(Color.web("#3b95db"));
+        gridUI[currentEndPoint.getY()][currentEndPoint.getX()].setFill(Color.web("#0652bc"));
         if (!algorithm.isFinished()) {
             algorithm.step();
             for (Node node : algorithm.visitedNodes()) {
                 if (node != currentStartPoint && node != currentEndPoint) {
-                    gridUI[node.getY()][node.getX()].setFill(Color.YELLOW);
+                    gridUI[node.getY()][node.getX()].setFill(Color.web("#f8a0c4"));
                 }
             }
         } else {
@@ -255,14 +283,13 @@ public class Main extends Application{
             if (algorithm.hasPath()) {
                 for (Node node : algorithm.foundPath()) {
                     if (node != currentStartPoint && node != currentEndPoint) {
-                        gridUI[node.getY()][node.getX()].setFill(Color.ORANGE);
+                        gridUI[node.getY()][node.getX()].setFill(Color.web("#f4679d"));
                     }
                 }
             }
+
             //change state to not active
             isRunning = false;
-            gridUI[currentStartPoint.getY()][currentStartPoint.getX()].setFill(Color.BLUE);
-            gridUI[currentEndPoint.getY()][currentEndPoint.getX()].setFill(Color.GREEN);
         }
     }));
     timelineHolder[0].setCycleCount(Timeline.INDEFINITE);
