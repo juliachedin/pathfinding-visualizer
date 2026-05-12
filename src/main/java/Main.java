@@ -126,12 +126,13 @@ public class Main extends Application{
         ObservableList<String> algorithms = algorithmButton.getItems();
         algorithms.addAll("BFS", "Dijkstra", "A*");
 
+        //create toggle group and add all buttons for this. Creates visual effect of one being chosen at a time
         ToggleGroup buttonGroup = new ToggleGroup();
         wallButton.setToggleGroup(buttonGroup);
         startButton.setToggleGroup(buttonGroup);
         endButton.setToggleGroup(buttonGroup);
         runButton.setToggleGroup(buttonGroup);
-        
+
         //add buttons to CSS style class
         wallButton.getStyleClass().add("button");
         startButton.getStyleClass().add("button");
@@ -170,7 +171,7 @@ public class Main extends Application{
     }   
 
     /**
-     * Updates if the runbutton is still disabled or not
+     * Updates if the runbutton is still disabled or not based on conditions
      * @param runButton button to be disabled
      */
     public void updateRunButton(){
