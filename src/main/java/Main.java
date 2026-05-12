@@ -66,23 +66,26 @@ public class Main extends Application{
                     int typeOfRect = currentNode.getType();
                     if (typeOfRect == 0){
                         switch(editType){
+                            //wall
                             case 1:
                                 rect.setFill(Color.web("#c2185b"));
                                 break;
+                            //start point
                             case 2:
-                                rect.setFill(Color.web("#303d36"));
+                                rect.setFill(Color.web("#3b95db"));
                                 if (currentStartPoint != null){
                                     currentStartPoint.setType(0);
-                                    gridUI[currentStartPoint.getY()][currentStartPoint.getX()].setFill(Color.WHITE);
+                                    gridUI[currentStartPoint.getY()][currentStartPoint.getX()].setFill(Color.web("#ffe4f0"));
                                 }
                                 currentStartPoint = grid.getNode(yVal, xVal);
 
                                 break;
+                            //end point
                             case 3:
-                                rect.setFill(Color.web("#f1e455"));
+                                rect.setFill(Color.web("#0652bc"));
                                 if (currentEndPoint != null){
                                     currentEndPoint.setType(0);
-                                    gridUI[currentEndPoint.getY()][currentEndPoint.getX()].setFill(Color.WHITE);
+                                    gridUI[currentEndPoint.getY()][currentEndPoint.getX()].setFill(Color.web("#ffe4f0"));
                                 }
 
                                 currentEndPoint = grid.getNode(yVal, xVal);
@@ -214,7 +217,7 @@ public class Main extends Application{
             if (node.getType() == 1) {
                 gridUI[i][j].setFill(Color.web("#c2185b"));
             } else {
-                gridUI[i][j].setFill(Color.WHITE);
+                gridUI[i][j].setFill(Color.web("#ffe4f0"));
             }
         }
     }
@@ -259,7 +262,7 @@ public class Main extends Application{
             algorithm.step();
             for (Node node : algorithm.visitedNodes()) {
                 if (node != currentStartPoint && node != currentEndPoint) {
-                    gridUI[node.getY()][node.getX()].setFill(Color.web("#ffd6e7"));
+                    gridUI[node.getY()][node.getX()].setFill(Color.web("#f8a0c4"));
                 }
             }
         } else {
@@ -267,12 +270,12 @@ public class Main extends Application{
             if (algorithm.hasPath()) {
                 for (Node node : algorithm.foundPath()) {
                     if (node != currentStartPoint && node != currentEndPoint) {
-                        gridUI[node.getY()][node.getX()].setFill(Color.web("#ec83ab"));
+                        gridUI[node.getY()][node.getX()].setFill(Color.web("#f4679d"));
                     }
                 }
             }
-            gridUI[currentStartPoint.getY()][currentStartPoint.getX()].setFill(Color.web("#303d36"));
-            gridUI[currentEndPoint.getY()][currentEndPoint.getX()].setFill(Color.web("#f1e455"));
+            gridUI[currentStartPoint.getY()][currentStartPoint.getX()].setFill(Color.web("#3b95db"));
+            gridUI[currentEndPoint.getY()][currentEndPoint.getX()].setFill(Color.web("#0652bc"));
         }
     }));
     timelineHolder[0].setCycleCount(Timeline.INDEFINITE);
