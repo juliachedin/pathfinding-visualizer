@@ -37,6 +37,10 @@
     -fx-cursor: hand;
 }
 
+.choice-box:disabled{
+    -fx-background-color: #8f8f8f;
+}
+
 .context-menu {
     -fx-background-color: #f9cdea;
     -fx-background-radius: 8;
