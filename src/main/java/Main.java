@@ -49,6 +49,10 @@ public class Main extends Application{
     private boolean isRunning = false;
 
     private ToggleButton runButton;
+    private ToggleButton wallButton;
+    private ToggleButton startButton;
+    private ToggleButton endButton;
+    private ChoiceBox<String> algorithmButton;
     
     public void createVisualGrid(){
         gridUI = new Rectangle[numCellsX][numCellsY];
@@ -119,11 +123,11 @@ public class Main extends Application{
     
     public void createButtons(){
 
-        ToggleButton wallButton = new ToggleButton("Wall");
-        ToggleButton startButton = new ToggleButton("Start");
-        ToggleButton endButton = new ToggleButton("End");
+        wallButton = new ToggleButton("Wall");
+        startButton = new ToggleButton("Start");
+        endButton = new ToggleButton("End");
         runButton = new ToggleButton("Run");
-        ChoiceBox<String> algorithmButton = new ChoiceBox<String>();
+        algorithmButton = new ChoiceBox<String>();
 
         //use observable list to add items to the choice box
         ObservableList<String> algorithms = algorithmButton.getItems();
@@ -156,6 +160,7 @@ public class Main extends Application{
             //change state to active
             isRunning = true;
             updateRunButton();
+            updateButtons(true);
         });
 
         updateRunButton();
@@ -169,7 +174,6 @@ public class Main extends Application{
         buttonPane.getChildren().addAll(wallButton, startButton, endButton, runButton, algorithmButton);
         buttonPane.setAlignment(Pos.CENTER);
         buttonPane.setPadding(new Insets(10));
-
         
     }   
 
@@ -185,6 +189,13 @@ public class Main extends Application{
             runButton.setDisable(true);
         }
 
+    }
+    
+    public void updateButtons(boolean isDisabled){
+        wallButton.setDisable(isDisabled);
+        startButton.setDisable(isDisabled);
+        endButton.setDisable(isDisabled);
+        algorithmButton.setDisable(isDisabled);
     }
 
     public static void main(String[] args) {
@@ -325,6 +336,8 @@ public class Main extends Application{
 
             //change state to not active
             isRunning = false;
+            updateButtons(false);
+            updateRunButton();
         }
     }));
     timelineHolder[0].setCycleCount(Timeline.INDEFINITE);
