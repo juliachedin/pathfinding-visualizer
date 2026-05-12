@@ -46,6 +46,8 @@ public class Main extends Application{
 
     //to check state of visualizer and if it is running a search
     private boolean isRunning = false;
+
+    private Button runButton;
     
     public void createVisualGrid(){
         gridUI = new Rectangle[numCellsX][numCellsY];
@@ -101,7 +103,7 @@ public class Main extends Application{
                         rect.setFill(Color.WHITE);
                         currentNode.setType(0);
                     }
-                    
+                    updateRunButton();
                 });
                 //remember each rect using a 2D array
                 gridUI[i][j] = rect;
@@ -115,7 +117,7 @@ public class Main extends Application{
         Button wallButton = new Button("Wall");
         Button startButton = new Button("Start");
         Button endButton = new Button("End");
-        Button runButton = new Button("Run");
+        runButton = new Button("Run");
         ChoiceBox<String> algorithmButton = new ChoiceBox<String>();
 
         //use observable list to add items to the choice box
@@ -138,16 +140,19 @@ public class Main extends Application{
             editType = 3;
         });
         runButton.setOnAction(event -> {
-            //to be allowed to run start/end points must exist, an algorithm has to be chosen and state of visualizer not running
-            if (currentStartPoint != null && currentEndPoint != null && selectedAlgorithm != null && !isRunning) {
-                runAlgorithm();
-                //change state to active
-                isRunning = true;
-            }
+            runAlgorithm();
+            //change state to active
+            isRunning = true;
+            updateRunButton();
         });
+
+        updateRunButton();
+        
         algorithmButton.setOnAction(event -> {
             selectedAlgorithm = algorithmButton.getValue();
+            updateRunButton();
         });
+
 
         buttonPane.getChildren().addAll(wallButton, startButton, endButton, runButton, algorithmButton);
         buttonPane.setAlignment(Pos.CENTER);
@@ -155,6 +160,20 @@ public class Main extends Application{
 
         
     }   
+
+    /**
+     * Updates if the runbutton is still disabled or not
+     * @param runButton button to be disabled
+     */
+    public void updateRunButton(){
+        //to be allowed to run start/end points must exist, an algorithm has to be chosen and state of visualizer not running
+        if (currentStartPoint != null && currentEndPoint != null && selectedAlgorithm != null && !isRunning) {
+            runButton.setDisable(false);
+        } else {
+            runButton.setDisable(true);
+        }
+
+    }
 
     public static void main(String[] args) {
         launch(args); //set up in the application 
