@@ -122,6 +122,12 @@ public class Main extends Application{
         ObservableList<String> algorithms = algorithmButton.getItems();
         algorithms.addAll("BFS", "Dijkstra", "A*");
 
+        //add buttons to CSS style class
+        wallButton.getStyleClass().add("button");
+        startButton.getStyleClass().add("button");
+        endButton.getStyleClass().add("button");
+        runButton.getStyleClass().add("button");
+
         wallButton.setOnAction(event -> {
             editType = 1;
         });
@@ -187,6 +193,7 @@ public class Main extends Application{
         layout.setCenter(gridPane);
         layout.setLeft(buttonPane);
         Scene scene = new Scene(layout, width, height);
+        scene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
         primaryStage.setScene(scene);
         primaryStage.show();
     }
