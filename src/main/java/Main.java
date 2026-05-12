@@ -214,8 +214,13 @@ public class Main extends Application{
     for (int i = 0; i < numCellsY; i++) {
         for (int j = 0; j < numCellsX; j++) {
             Node node = grid.getNode(i, j);
-            if (node.getType() == 1) {
+            int cellType = node.getType();
+            if (cellType == 1) {
                 gridUI[i][j].setFill(Color.web("#c2185b"));
+            } else if (cellType == 2) {
+                gridUI[i][j].setFill(Color.web("#3b95db"));
+            } else if (cellType == 3) {
+                gridUI[i][j].setFill(Color.web("#0652bc"));
             } else {
                 gridUI[i][j].setFill(Color.web("#ffe4f0"));
             }
@@ -258,6 +263,8 @@ public class Main extends Application{
     // Replace while-loop with Timeline animation - runs one step at a time with 30ms delay
     Timeline[] timelineHolder = new Timeline[1];
     timelineHolder[0] = new Timeline(new KeyFrame(Duration.millis(30), event -> {
+        gridUI[currentStartPoint.getY()][currentStartPoint.getX()].setFill(Color.web("#3b95db"));
+        gridUI[currentEndPoint.getY()][currentEndPoint.getX()].setFill(Color.web("#0652bc"));
         if (!algorithm.isFinished()) {
             algorithm.step();
             for (Node node : algorithm.visitedNodes()) {
@@ -274,8 +281,7 @@ public class Main extends Application{
                     }
                 }
             }
-            gridUI[currentStartPoint.getY()][currentStartPoint.getX()].setFill(Color.web("#3b95db"));
-            gridUI[currentEndPoint.getY()][currentEndPoint.getX()].setFill(Color.web("#0652bc"));
+
         }
     }));
     timelineHolder[0].setCycleCount(Timeline.INDEFINITE);
