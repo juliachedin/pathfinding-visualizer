@@ -43,6 +43,9 @@ public class Main extends Application{
     private Node currentEndPoint = null;
 
     private String selectedAlgorithm = null;
+
+    //to check state of visualizer and if it is running a search
+    private boolean isRunning = false;
     
     public void createVisualGrid(){
         gridUI = new Rectangle[numCellsX][numCellsY];
@@ -129,8 +132,11 @@ public class Main extends Application{
             editType = 3;
         });
         runButton.setOnAction(event -> {
-            if (currentStartPoint != null && currentEndPoint != null && selectedAlgorithm != null) {
+            //to be allowed to run start/end points must exist, an algorithm has to be chosen and state of visualizer not running
+            if (currentStartPoint != null && currentEndPoint != null && selectedAlgorithm != null && !isRunning) {
                 runAlgorithm();
+                //change state to active
+                isRunning = true;
             }
         });
         algorithmButton.setOnAction(event -> {
@@ -253,6 +259,8 @@ public class Main extends Application{
                     }
                 }
             }
+            //change state to not active
+            isRunning = false;
             gridUI[currentStartPoint.getY()][currentStartPoint.getX()].setFill(Color.BLUE);
             gridUI[currentEndPoint.getY()][currentEndPoint.getX()].setFill(Color.GREEN);
         }
