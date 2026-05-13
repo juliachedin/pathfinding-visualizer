@@ -52,6 +52,7 @@ public class Main extends Application{
     private ToggleButton wallButton;
     private ToggleButton startButton;
     private ToggleButton endButton;
+    private ToggleButton cleanButton;
     private ChoiceBox<String> algorithmButton;
     
     public void createVisualGrid(){
@@ -127,6 +128,7 @@ public class Main extends Application{
         startButton = new ToggleButton("Start");
         endButton = new ToggleButton("End");
         runButton = new ToggleButton("Run");
+        cleanButton = new ToggleButton("Clean");
         algorithmButton = new ChoiceBox<String>();
 
         //use observable list to add items to the choice box
@@ -139,12 +141,14 @@ public class Main extends Application{
         startButton.setToggleGroup(buttonGroup);
         endButton.setToggleGroup(buttonGroup);
         runButton.setToggleGroup(buttonGroup);
+        cleanButton.setToggleGroup(buttonGroup);
 
         //add buttons to CSS style class
         wallButton.getStyleClass().add("button");
         startButton.getStyleClass().add("button");
         endButton.getStyleClass().add("button");
         runButton.getStyleClass().add("button");
+        cleanButton.getStyleClass().add("button");
 
         wallButton.setOnAction(event -> {
             editType = 1;
