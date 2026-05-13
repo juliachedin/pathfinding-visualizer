@@ -166,6 +166,10 @@ public class Main extends Application{
             updateRunButton();
             updateButtons(true);
         });
+        cleanButton.setOnAction(event -> {
+            grid.cleanGrid();
+            createVisualGrid();
+        });
 
         updateRunButton();
         
@@ -175,7 +179,7 @@ public class Main extends Application{
         });
 
 
-        buttonPane.getChildren().addAll(wallButton, startButton, endButton, runButton, algorithmButton);
+        buttonPane.getChildren().addAll(wallButton, startButton, endButton, cleanButton, runButton, algorithmButton);
         buttonPane.setAlignment(Pos.CENTER);
         buttonPane.setPadding(new Insets(10));
         
