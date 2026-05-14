@@ -32,7 +32,7 @@ public class Grid{
     public void cleanGrid(){
     for (int i = 0; i < ySize; i++){
         for (int j = 0; j < xSize; j++){
-            if (nodes[i][j].getType() != 1) {
+            if (nodes[i][j].getType() != 0) {
                 nodes[i][j].setParent(null);
                 nodes[i][j].setType(0);
             } else {

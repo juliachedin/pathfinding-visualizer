@@ -52,6 +52,7 @@ public class Main extends Application{
     private ToggleButton wallButton;
     private ToggleButton startButton;
     private ToggleButton endButton;
+    private ToggleButton cleanButton;
     private ChoiceBox<String> algorithmButton;
     
     public void createVisualGrid(){
@@ -120,6 +121,7 @@ public class Main extends Application{
             }
         }
     }
+
     
     public void createButtons(){
 
@@ -127,6 +129,7 @@ public class Main extends Application{
         startButton = new ToggleButton("Start");
         endButton = new ToggleButton("End");
         runButton = new ToggleButton("Run");
+        cleanButton = new ToggleButton("Clean");
         algorithmButton = new ChoiceBox<String>();
 
         //use observable list to add items to the choice box
@@ -139,12 +142,14 @@ public class Main extends Application{
         startButton.setToggleGroup(buttonGroup);
         endButton.setToggleGroup(buttonGroup);
         runButton.setToggleGroup(buttonGroup);
+        cleanButton.setToggleGroup(buttonGroup);
 
         //add buttons to CSS style class
         wallButton.getStyleClass().add("button");
         startButton.getStyleClass().add("button");
         endButton.getStyleClass().add("button");
         runButton.getStyleClass().add("button");
+        cleanButton.getStyleClass().add("button");
 
         wallButton.setOnAction(event -> {
             editType = 1;
@@ -162,8 +167,13 @@ public class Main extends Application{
             updateRunButton();
             updateButtons(true);
         });
-
-        updateRunButton();
+        cleanButton.setOnAction(event -> {
+            grid.cleanGrid();
+            createVisualGrid();
+            currentStartPoint = null;
+            currentEndPoint = null;
+            updateRunButton();
+        });
         
         algorithmButton.setOnAction(event -> {
             selectedAlgorithm = algorithmButton.getValue();
@@ -171,7 +181,7 @@ public class Main extends Application{
         });
 
 
-        buttonPane.getChildren().addAll(wallButton, startButton, endButton, runButton, algorithmButton);
+        buttonPane.getChildren().addAll(wallButton, startButton, endButton, cleanButton, runButton, algorithmButton);
         buttonPane.setAlignment(Pos.CENTER);
         buttonPane.setPadding(new Insets(10));
         
@@ -196,6 +206,7 @@ public class Main extends Application{
         startButton.setDisable(isDisabled);
         endButton.setDisable(isDisabled);
         algorithmButton.setDisable(isDisabled);
+        cleanButton.setDisable(isDisabled);
     }
 
     public static void main(String[] args) {
@@ -259,8 +270,6 @@ public class Main extends Application{
     }
 
     public void runAlgorithm() {
-    // Clean grid before running to avoid stale neighbours/parents
-    grid.cleanGrid();
 
     // Re-color walls that were visually reset
     for (int i = 0; i < numCellsY; i++) {
