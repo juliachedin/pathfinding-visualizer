@@ -121,6 +121,7 @@ public class Main extends Application{
             }
         }
     }
+
     
     public void createButtons(){
 
@@ -169,9 +170,8 @@ public class Main extends Application{
         cleanButton.setOnAction(event -> {
             grid.cleanGrid();
             createVisualGrid();
+            updateRunButton();
         });
-
-        updateRunButton();
         
         algorithmButton.setOnAction(event -> {
             selectedAlgorithm = algorithmButton.getValue();
@@ -204,6 +204,7 @@ public class Main extends Application{
         startButton.setDisable(isDisabled);
         endButton.setDisable(isDisabled);
         algorithmButton.setDisable(isDisabled);
+        cleanButton.setDisable(isDisabled);
     }
 
     public static void main(String[] args) {
@@ -267,8 +268,6 @@ public class Main extends Application{
     }
 
     public void runAlgorithm() {
-    // Clean grid before running to avoid stale neighbours/parents
-    grid.cleanGrid();
 
     // Re-color walls that were visually reset
     for (int i = 0; i < numCellsY; i++) {
