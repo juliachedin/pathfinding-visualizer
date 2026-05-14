@@ -170,6 +170,8 @@ public class Main extends Application{
         cleanButton.setOnAction(event -> {
             grid.cleanGrid();
             createVisualGrid();
+            currentStartPoint = null;
+            currentEndPoint = null;
             updateRunButton();
         });
         
