@@ -325,6 +325,7 @@ public class Main extends Application{
     }
 
     algorithm.initialize(currentStartPoint, currentEndPoint);
+    long startTime = System.currentTimeMillis();
 
     // Replace while-loop with Timeline animation - runs one step at a time with 30ms delay
     Timeline[] timelineHolder = new Timeline[1];
@@ -340,6 +341,8 @@ public class Main extends Application{
             }
         } else {
             timelineHolder[0].stop();
+            double elapsed = (System.currentTimeMillis() - startTime) / 1000.0;
+            timeLabel.setText("Time: " + elapsed + " s");
             if (algorithm.hasPath()) {
                 for (Node node : algorithm.foundPath()) {
                     if (node != currentStartPoint && node != currentEndPoint) {
