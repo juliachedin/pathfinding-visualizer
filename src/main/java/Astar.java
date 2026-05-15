@@ -77,7 +77,7 @@ public class Astar implements PathfindingAlgorithm {
      * Checks if the algorithm is still searching or not.
      */
     public boolean isFinished() {
-        return queue.isEmpty();
+        return queue.isEmpty() || hasPath();
     }
 
     /**
