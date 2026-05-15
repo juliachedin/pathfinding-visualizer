@@ -55,6 +55,7 @@ public class Main extends Application{
     private ToggleButton cleanButton;
     private ChoiceBox<String> algorithmButton;
     private javafx.scene.control.Label timeLabel;
+    private javafx.scene.control.Label nodesLabel;
     
     public void createVisualGrid(){
         gridUI = new Rectangle[numCellsX][numCellsY];
@@ -266,6 +267,10 @@ public class Main extends Application{
         timeLabel.setStyle("-fx-font-size: 16px; -fx-text-fill: #090957; -fx-padding: 5px;");
         bottomPane.getChildren().add(timeLabel);
 
+        nodesLabel = new javafx.scene.control.Label("Nodes visited: -");
+        nodesLabel.setStyle("-fx-font-size: 16px; -fx-text-fill: #090957; -fx-padding: 5px;");
+        bottomPane.getChildren().add(nodesLabel);
+
         layout.setCenter(centerPane);
         layout.setBottom(bottomPane);
         Scene scene = new Scene(layout, width, height);
@@ -343,6 +348,7 @@ public class Main extends Application{
             timelineHolder[0].stop();
             double elapsed = (System.currentTimeMillis() - startTime) / 1000.0;
             timeLabel.setText("Time: " + elapsed + " s");
+            nodesLabel.setText("Nodes visited: " + algorithm.visitedNodes().size());
             if (algorithm.hasPath()) {
                 for (Node node : algorithm.foundPath()) {
                     if (node != currentStartPoint && node != currentEndPoint) {
