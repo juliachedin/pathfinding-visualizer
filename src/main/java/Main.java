@@ -267,6 +267,10 @@ public class Main extends Application{
         timeLabel.setStyle("-fx-font-size: 16px; -fx-text-fill: #090957; -fx-padding: 5px;");
         bottomPane.getChildren().add(timeLabel);
 
+        nodesLabel = new javafx.scene.control.Label("Nodes visited: -");
+        nodesLabel.setStyle("-fx-font-size: 16px; -fx-text-fill: #090957; -fx-padding: 5px;");
+        bottomPane.getChildren().add(nodesLabel);
+
         layout.setCenter(centerPane);
         layout.setBottom(bottomPane);
         Scene scene = new Scene(layout, width, height);
