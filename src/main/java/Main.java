@@ -262,6 +262,10 @@ public class Main extends Application{
         bottomPane.setPadding(new Insets(10));
         bottomPane.getChildren().addAll(buttonPane.getChildren());
 
+        timeLabel = new javafx.scene.control.Label("Time: -");
+        timeLabel.setStyle("-fx-font-size: 16px; -fx-text-fill: #090957; -fx-padding: 5px;");
+        bottomPane.getChildren().add(timeLabel);
+
         layout.setCenter(centerPane);
         layout.setBottom(bottomPane);
         Scene scene = new Scene(layout, width, height);
