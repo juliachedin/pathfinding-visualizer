@@ -53,7 +53,7 @@ public class BFS implements PathfindingAlgorithm{
      * Checks if the algorithm is still searching or not
      */
     public boolean isFinished(){
-        if (queue.isEmpty()){
+        if (queue.isEmpty() || hasPath()){
             return true;
         }
         return false;
