@@ -348,6 +348,7 @@ public class Main extends Application{
             timelineHolder[0].stop();
             double elapsed = (System.currentTimeMillis() - startTime) / 1000.0;
             timeLabel.setText("Time: " + elapsed + " s");
+            nodesLabel.setText("Nodes visited: " + algorithm.visitedNodes().size());
             if (algorithm.hasPath()) {
                 for (Node node : algorithm.foundPath()) {
                     if (node != currentStartPoint && node != currentEndPoint) {
