@@ -55,6 +55,7 @@ public class Main extends Application{
     private ToggleButton cleanButton;
     private ChoiceBox<String> algorithmButton;
     private javafx.scene.control.Label timeLabel;
+    private javafx.scene.control.Label nodesLabel;
     
     public void createVisualGrid(){
         gridUI = new Rectangle[numCellsX][numCellsY];
