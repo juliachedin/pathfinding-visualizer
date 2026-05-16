@@ -32,3 +32,25 @@ estimate how far each node is from the goal, which means it prioritizes
 nodes that are both close to the start and close to the end. This makes 
 it faster than Dijkstra in practice since it avoids exploring nodes in 
 the wrong direction.
+
+## Project Structure
+
+```
+pathfinding-visualizer/
+├── src/
+│   ├── main/
+│   │   ├── java/
+│   │   │   ├── Main.java               # JavaFX application, UI and visualization
+│   │   │   ├── Grid.java               # 2D grid of nodes
+│   │   │   ├── Node.java               # Graph node with position, type and neighbours
+│   │   │   ├── PathfindingAlgorithm.java # Interface for all algorithms
+│   │   │   ├── BFS.java                # Breadth-First Search implementation
+│   │   │   ├── Dijkstra.java           # Dijkstra's algorithm implementation
+│   │   │   └── Astar.java              # A* algorithm implementation
+│   │   └── resources/
+│   │       └── style.css               # CSS styling for buttons and UI
+│   └── test/
+│       └── java/
+│           └── NodeTest.java           # Unit tests for the Node class
+└── pom.xml                             # Maven configuration
+```
